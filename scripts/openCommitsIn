@@ -29,7 +29,12 @@ filesNotFound() {
 
 if [ -z "$1" ]; then
   TICKET=$(git rev-parse --abbrev-ref HEAD | grep -Eo '([A-Z]{3,}-)([0-9]+)' -m 1)
-  
+
+  if [ "$TICKET" == "" ]; then
+    echo "No ticket entered, and invalid branch name.  Please enter a valid ticket"
+    exit 1
+  fi
+
   echo "No ticket entered, using branch name $TICKET."
 else
   if [[ $1 =~ ^([A-Z]{3,}-)([0-9]+)$ ]]; then
